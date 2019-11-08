@@ -36,17 +36,6 @@ async function query() {
     return rows;
 }
 
-function mapWordCounts (wordsMap, wordsArray) {
-
-  wordsArray.forEach(key => {
-    if (wordsMap.hasOwnProperty(key)) {
-      wordsMap[key]++;
-    } else {
-      wordsMap[key] = 1;
-    }
-  });
-}
-
 function range(start, stop, step) {
     if (typeof stop == 'undefined') {
         stop = start;
@@ -76,7 +65,15 @@ function get_commits(limit = 100) {
         if(line.type === "PushEvent") {
             var commits = line.payload.commits;
             commits.forEach(c => {
-                mapWordCounts(wordsMap, nlp(c.message).nouns().out('array'))
+                var nouns = nlp(c.message).nouns().out('array');
+                console.log(nouns);
+                nouns.forEach(key => {
+                    if(wordsMap.hasOwnProperty(key)) {
+                        wordsMap[key]++;
+                    } else {
+                        wordsMap[key] = 1;
+                    }
+                });
             });
         }
     });
@@ -85,7 +82,6 @@ function get_commits(limit = 100) {
         allCommits.push({text:key, value:wordsMap[key]});
     });
     allCommits.sort((a, b) => (a.value < b.value ? 1 : -1));
-    console.log(allCommits);
     if(limit > 0)
         allCommits = allCommits.slice(0, limit);
     return allCommits;
