@@ -61,22 +61,21 @@ function range(start, stop, step) {
 function get_commits(limit = 100) {
     var allCommits = [];
     var wordsMap = {};
+    var commits = []
     jsonData.forEach(line => {
         if(line.type === "PushEvent") {
-            var commits = line.payload.commits;
-            commits.forEach(c => {
-                var nouns = nlp(c.message).nouns().out('array');
-                console.log(nouns);
-                nouns.forEach(key => {
-                    if(wordsMap.hasOwnProperty(key)) {
-                        wordsMap[key]++;
-                    } else {
-                        wordsMap[key] = 1;
-                    }
-                });
-            });
+            commits.push(...line.payload.commits.map(a => a.message));
         }
     });
+    var nouns = nlp(commits).sentences().nouns().out('array');
+    nouns.forEach(key => {
+        if(wordsMap.hasOwnProperty(key)) {
+            wordsMap[key]++;
+        } else {
+            wordsMap[key] = 1;
+        }
+    });
+
 
     Object.keys(wordsMap).forEach(key => {
         allCommits.push({text:key, value:wordsMap[key]});
@@ -99,12 +98,12 @@ if(data.length == 0) {
       <div>
         <h1>CommitCloud</h1>
         <h3>Word clouds for commits across GitHub via <a href="https://gharchive.org/">GH Archive</a></h3>
-      <div style={{width:'900px',height:'900px'}}>
+      <div style={{width:'800px',height:'800px'}}>
         <ReactWordcloud
             options={{
-                rotations: 2,
+                rotations: 3,
                 rotationAngles: [0, 90],
-                fontSizes: range(15, 400, 100),
+                fontSizes: [15,100,200,300,400],
             }}
             words={data}
       />
