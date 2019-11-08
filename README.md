@@ -1,3 +1,8 @@
+# CommitCloud
+CommitCloud visualizes common words used in commit messages. Created @ Devweek Austin Hackathon (11/7/19)
+
+![Screenshot of the app](README/screenshot.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
