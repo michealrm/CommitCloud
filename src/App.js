@@ -85,7 +85,8 @@ function App() {
           <div className="container">
             <h1>CommitCloud</h1>
             <h3>Word clouds for commits across GitHub via <a href="https://gharchive.org/">GH Archive</a></h3>
-          <div style={{width:'800px',height:'800px'}}>
+            <br />
+          <div className="center" style={{height:'500px', width:'80%'}}>
             <ReactWordcloud
                 options={{
                     rotations: 3,

@@ -22,7 +22,11 @@
 }
 
 .container {
-    padding-top: 10%;
-    margin: 0 auto;
+    padding-top: 15px;
     text-align: center;
+    display:block;
+}
+
+.center {
+    margin: auto;
 }
