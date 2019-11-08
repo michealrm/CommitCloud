@@ -5,6 +5,7 @@ import jsonData from './jsonData2.json';
 import ReactWordcloud from 'react-wordcloud';
 const {BigQuery} = require('@google-cloud/bigquery');
 const bq = new BigQuery();
+var nlp = require('compromise')
 
 function App() {
   const [msg, setMsg] = useState('Loading...');
@@ -48,7 +49,6 @@ function mapWordCounts (wordsMap, wordsArray) {
 
 function range(start, stop, step) {
     if (typeof stop == 'undefined') {
-        // one param defined
         stop = start;
         start = 0;
     }
@@ -76,7 +76,7 @@ function get_commits(limit = 100) {
         if(line.type === "PushEvent") {
             var commits = line.payload.commits;
             commits.forEach(c => {
-                mapWordCounts(wordsMap, c.message.split(' '))
+                mapWordCounts(wordsMap, nlp(c.message).nouns().out('array'))
             });
         }
     });
