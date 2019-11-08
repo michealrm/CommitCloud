@@ -9,6 +9,7 @@
     "react": "^16.11.0",
     "react-async": "^9.0.0",
     "react-bootstrap": "^1.0.0-beta.14",
+    "react-d3-cloud": "^0.7.0",
     "react-dom": "^16.11.0",
     "react-scripts": "3.2.0",
     "react-wordcloud": "^1.1.1"
